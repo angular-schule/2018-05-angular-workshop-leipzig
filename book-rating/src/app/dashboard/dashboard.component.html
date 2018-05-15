@@ -1,5 +1,10 @@
-<br-book [book]="books[0]"></br-book>
+<br-book [book]="b" *ngFor="let b of books"></br-book>
 
+
+<ul>
+  <li *ngFor="let b of books; index as i">{{ i }} {{ b.title }}</li>
+</ul>
 
 <hr>
 <a [href]="url">Zur Website</a>
+
