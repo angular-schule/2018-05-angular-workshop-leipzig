@@ -9,11 +9,14 @@ import { Book } from '../shared/book';
 export class DashboardComponent implements OnInit {
 
   books: Book[];
+  url: string;
 
   constructor() {
   }
 
   ngOnInit() {
+    this.url = 'https://angular.schule';
+
     this.books = [
       {
         isbn: '000',
