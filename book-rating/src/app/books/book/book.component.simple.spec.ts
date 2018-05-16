@@ -1,5 +1,6 @@
 import { BookComponent } from './book.component';
 import { Book } from '../shared/book';
+import { BookRatingService } from '../shared/book-rating.service';
 
 fdescribe('BookComponent Simple', () => {
   let component: BookComponent;
@@ -9,21 +10,17 @@ fdescribe('BookComponent Simple', () => {
   });
 
   it('should forward rateUp call to the RatingService', () => {
-    let ratingWasCalled = false;
 
     component.rs = {
-      rateUp: (book: Book) => {
-        ratingWasCalled = true;
-        return book;
-      },
-      rateDown: (book: Book) => book,
-    };
+      rateUp: (book: Book) => book
+    } as BookRatingService;
 
+    spyOn(component.rs, 'rateUp').and.callThrough();
 
     component.rateUp();
 
+    expect(component.rs.rateUp).toHaveBeenCalled();
 
-    expect(ratingWasCalled).toBe(true);
   });
 
   it('should throw "rate" event for rateUp', () => {
