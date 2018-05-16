@@ -24,6 +24,19 @@ fdescribe('BookComponent Simple', () => {
   });
 
   it('should throw "rate" event for rateUp', () => {
-    expect(true).toBe(false);
+    component.rs = {
+      rateUp: (book: Book) => book // 1.) oder hier konkretes Buch erzeugen
+    } as BookRatingService;
+
+    component.book = {
+      isbn: '', author: '', title: '', description: '', rating: 5
+    };
+
+    component.rate.subscribe((_book: Book) => {
+      expect(_book).toBe(component.book); // 2.) und dann hier auf konkretes Buch von oben prüfen
+    });
+
+    component.rateUp();
+
   });
 });
