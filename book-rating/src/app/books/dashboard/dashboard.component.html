@@ -1,4 +1,7 @@
-<br-book [book]="b" *ngFor="let b of books"></br-book>
+<br-book
+  [book]="b"
+  *ngFor="let b of books"
+  (rate)="updateSortList($event)"></br-book>
 
 
 <ul>
