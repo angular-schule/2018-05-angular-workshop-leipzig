@@ -1,4 +1,5 @@
 import { AppPage } from './app.po';
+import { browser, $, $$ } from 'protractor';
 
 describe('workspace-project App', () => {
   let page: AppPage;
@@ -9,6 +10,15 @@ describe('workspace-project App', () => {
 
   it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Welcome to app!');
+    expect(page.getParagraphText()).toEqual('Book Rating!');
+  });
+
+  it('should render 2 book widgets', () => {
+    browser.get('/');
+    const elementCount = page.getBooksCount();
+
+    browser.sleep(5000);
+
+    expect(elementCount).toBe(2);
   });
 });
