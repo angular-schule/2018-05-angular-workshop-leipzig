@@ -6,7 +6,7 @@ describe('BookComponent Simple', () => {
   let component: BookComponent;
 
   beforeEach(() => {
-    component = new BookComponent();
+    component = new BookComponent({} as BookRatingService); // WORKAROUND!
   });
 
   it('should forward rateUp call to the RatingService', () => {

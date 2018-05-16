@@ -9,12 +9,12 @@ import { ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['./book.component.scss']
 })
 export class BookComponent implements OnInit {
-  rs = new BookRatingService();
+  // rs = new BookRatingService();
 
   @Input() book: Book;
   @Output() rate = new EventEmitter<Book>();
 
-  constructor() { }
+  constructor(public rs: BookRatingService) {  }
 
   ngOnInit() {
   }
