@@ -33,7 +33,7 @@ describe('BookComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  fit('should display the correct rating', () => {
+  it('should display the correct rating', () => {
     const ratingBox = fixture
       .debugElement
       .query(By.css('.testing-rating-box'));
