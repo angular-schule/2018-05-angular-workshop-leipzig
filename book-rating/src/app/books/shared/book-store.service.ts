@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Book } from './book';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +11,20 @@ export class BookStoreService {
 
   constructor(private http: HttpClient) { }
 
-  getAll(): Observable<any[]> { // Observable<Book[]>
-    return this.http.get<any[]>('https://api.angular.schule/books');
+  getAll(): Observable<Book[]> { // TODO: Interface für API-Response anlegen
+    return this.http.get<any[]>('https://api.angular.schule/books').pipe(
+      map(apiBooks => {
+        return apiBooks.map(book => {
+          return {
+            isbn: book.isbn,
+            title: book.title,
+            description: book.description,
+            author: book.authors.join(', '),
+            rating: book.rating
+          };
+        });
+      })
+    );
   }
 
   getSingle(isbn: string): Observable<Book> {

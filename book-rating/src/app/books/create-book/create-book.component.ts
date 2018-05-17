@@ -2,6 +2,7 @@ import { Component, OnInit, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Book } from '../shared/book';
 import { Output } from '@angular/core';
+import { map, filter, distinctUntilChanged, debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'br-create-book',
@@ -28,8 +29,14 @@ export class CreateBookComponent implements OnInit {
       author: new FormControl('', Validators.required)
     });
 
-    this.bookForm.valueChanges
-      .subscribe(value => console.log(value));
+    // import { map, filter, distinctUntilChanged, debounceTime } from 'rxjs/operators';
+    this.bookForm.valueChanges.pipe(
+      map(value => value.isbn),
+      filter(isbn => isbn.length >= 3),
+      distinctUntilChanged(),
+      debounceTime(1000)
+    )
+    .subscribe(value => console.log(value));
   }
 
   logForm() {
