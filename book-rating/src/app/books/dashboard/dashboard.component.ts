@@ -11,7 +11,7 @@ export class DashboardComponent implements OnInit {
 
   d = new Date();
 
-  books: Book[];
+  books: Book[] = [];
   url: string;
 
   constructor(private bs: BookStoreService) { }
@@ -19,7 +19,19 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.url = 'https://angular.schule';
 
-    this.books = this.bs.getAllStatic();
+    this.bs.getAll().subscribe(books => {
+      this.books = books.map(book => {
+        return {
+          isbn: book.isbn,
+          title: book.title,
+          description: book.description,
+          author: book.authors.join(', '),
+          rating: book.rating
+        };
+      });
+    });
+
+
   }
 
   updateSortList(book: Book) {
