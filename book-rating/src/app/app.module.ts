@@ -13,8 +13,8 @@ import { BooksModule } from './books/books.module';
   ],
   imports: [
     BrowserModule,
+    BooksModule,
     AppRoutingModule,
-    BooksModule
   ],
   providers: [],
   bootstrap: [AppComponent]
