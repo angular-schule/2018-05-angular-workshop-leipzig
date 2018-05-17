@@ -4,6 +4,7 @@ import { BookComponent } from './book.component';
 import { By } from '@angular/platform-browser';
 import { BookRatingService } from '../shared/book-rating.service';
 import { Book } from '../shared/book';
+import { ChangeDetectionStrategy } from '@angular/core';
 
 describe('BookComponent', () => {
   let component: BookComponent;
@@ -23,6 +24,9 @@ describe('BookComponent', () => {
         }
       ]*/
     })
+    /*.overrideComponent(BookComponent, { // Change Detection manuell auf Default setzen, sonst funktioniert CD nicht
+      set: { changeDetection: ChangeDetectionStrategy.Default }
+    })*/
     .compileComponents();
   }));
 

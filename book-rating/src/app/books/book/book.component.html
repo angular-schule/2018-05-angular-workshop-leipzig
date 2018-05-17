@@ -3,7 +3,7 @@
     <img class="img-thumbnail float-right" src="//api.angular.schule/avatar/{{ book.rating }}">
     <div class="card-title">
       <h2>
-        {{ book.title }}
+        {{ foo }} {{ book.title }}
         <span class="badge badge-secondary testing-rating-box">{{ book.rating }}</span>
       </h2>
       <p class="text-muted">
@@ -14,5 +14,6 @@
 
     <button class="btn btn-secondary mr-1" (click)="rateDown()">-</button>
     <button class="btn btn-secondary" (click)="rateUp()">+</button>
+    <button class="btn btn-secondary" (click)="1+1">TEST</button>
   </div>
 </div>
