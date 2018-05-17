@@ -2,7 +2,8 @@ import { Component, OnInit, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Book } from '../shared/book';
 import { Output } from '@angular/core';
-import { map, filter, distinctUntilChanged, debounceTime } from 'rxjs/operators';
+import { map, filter, distinctUntilChanged, debounceTime, takeUntil } from 'rxjs/operators';
+import { Subscription, Subject } from 'rxjs';
 
 @Component({
   selector: 'br-create-book',
@@ -14,6 +15,9 @@ export class CreateBookComponent implements OnInit {
   @Output() create = new EventEmitter<Book>();
 
   bookForm: FormGroup;
+
+  // subscription: Subscription;
+  destroy$: Subject<any> = new Subject();
 
   constructor() { }
 
@@ -29,12 +33,12 @@ export class CreateBookComponent implements OnInit {
       author: new FormControl('', Validators.required)
     });
 
-    // import { map, filter, distinctUntilChanged, debounceTime } from 'rxjs/operators';
     this.bookForm.valueChanges.pipe(
       map(value => value.isbn),
       filter(isbn => isbn.length >= 3),
       distinctUntilChanged(),
-      debounceTime(1000)
+      debounceTime(1000),
+      takeUntil(this.destroy$)
     )
     .subscribe(value => console.log(value));
   }
@@ -55,5 +59,10 @@ export class CreateBookComponent implements OnInit {
     };
     this.create.emit(newBook);
     this.bookForm.reset();
+  }
+
+  ngOnDestroy() {
+    // this.subscription.unsubscribe();
+    this.destroy$.next();
   }
 }
