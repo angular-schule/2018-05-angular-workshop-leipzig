@@ -1,10 +1,9 @@
-<br-create-book></br-create-book>
+<br-create-book (create)="addBook($event)"></br-create-book>
 
 <br-book
   [book]="b"
   *ngFor="let b of books"
   (rate)="updateSortList($event)"></br-book>
-
 
 <ul>
   <li *ngFor="let b of books; index as i">{{ i }} {{ b.title }}</li>
