@@ -20,7 +20,7 @@ export class DashboardComponent implements OnInit {
     this.url = 'https://angular.schule';
 
     this.bs.getAll().subscribe(books => {
-      this.books = books.map(book => {
+      this.books = books.map(book => { // TODO: Mapping gehört hier nicht hin...
         return {
           isbn: book.isbn,
           title: book.title,
@@ -45,8 +45,9 @@ export class DashboardComponent implements OnInit {
   }
 
   addBook(book: Book) {
-    this.updateSortList(book);
-    // TODO: HTTP
+    this.bs.create(book).subscribe(() => {
+      this.updateSortList(book);
+    });
   }
 
 }

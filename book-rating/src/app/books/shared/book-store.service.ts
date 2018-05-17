@@ -19,7 +19,15 @@ export class BookStoreService {
   }
 
   create(book: Book): Observable<any> {
-    return this.http.post('https://api.angular.schule/book', book, { responseType: 'text' });
+    const apiBook = {
+      isbn: book.isbn,
+      title: book.title,
+      description: book.description,
+      rating: book.rating,
+      authors: [book.author]
+    };
+
+    return this.http.post('https://api.angular.schule/book', apiBook, { responseType: 'text' });
   }
 
 
