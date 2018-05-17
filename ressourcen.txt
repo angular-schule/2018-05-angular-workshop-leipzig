@@ -1,2 +1,4 @@
 https://angular.io/guide/styleguide
 https://github.com/mgechev/angular-performance-checklist
+https://github.com/mgechev/ngworld
+https://github.com/UltimateAngular/ngx-errors
