@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Book } from '../shared/book';
 import { Output } from '@angular/core';
 import { map, filter, distinctUntilChanged, debounceTime, takeUntil } from 'rxjs/operators';
-import { Subscription, Subject } from 'rxjs';
+import { Subscription, Subject, Observable } from 'rxjs';
 
 @Component({
   selector: 'br-create-book',
@@ -16,8 +16,7 @@ export class CreateBookComponent implements OnInit {
 
   bookForm: FormGroup;
 
-  // subscription: Subscription;
-  destroy$: Subject<any> = new Subject();
+  isbn$: Observable<string>;
 
   constructor() { }
 
@@ -33,14 +32,12 @@ export class CreateBookComponent implements OnInit {
       author: new FormControl('', Validators.required)
     });
 
-    this.bookForm.valueChanges.pipe(
+    this.isbn$ = this.bookForm.valueChanges.pipe(
       map(value => value.isbn),
       filter(isbn => isbn.length >= 3),
       distinctUntilChanged(),
       debounceTime(1000),
-      takeUntil(this.destroy$)
-    )
-    .subscribe(value => console.log(value));
+    );
   }
 
   logForm() {
@@ -61,8 +58,4 @@ export class CreateBookComponent implements OnInit {
     this.bookForm.reset();
   }
 
-  ngOnDestroy() {
-    // this.subscription.unsubscribe();
-    this.destroy$.next();
-  }
 }
