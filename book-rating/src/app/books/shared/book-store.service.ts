@@ -12,7 +12,7 @@ export class BookStoreService {
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<Book[]> { // TODO: Interface für API-Response anlegen
-    return this.http.get<any[]>('https://api.angular.schule/booksss').pipe(
+    return this.http.get<any[]>('https://api.angular.schule/books').pipe(
       map(apiBooks => {
         return apiBooks.map(book => {
           return {
