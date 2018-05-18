@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Book } from './book';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, of, throwError } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,7 @@ export class BookStoreService {
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<Book[]> { // TODO: Interface für API-Response anlegen
-    return this.http.get<any[]>('https://api.angular.schule/books').pipe(
+    return this.http.get<any[]>('https://api.angular.schule/booksss').pipe(
       map(apiBooks => {
         return apiBooks.map(book => {
           return {
@@ -23,6 +23,22 @@ export class BookStoreService {
             rating: book.rating
           };
         });
+      }),
+      catchError(err => {
+        // Fehler behandeln und "verschlucken"
+        // of([...]) erstellt ein neues Observable mit einem gültigen Book-Array
+        // im .subscribe() wird das next-Callback gerufen, die Komponente erhält keinen Fehler
+
+        console.error(`Oh no, ${err.status} error occured`);
+        return of([
+          { isbn: '', title: 'Fehlerbuch', description: 'Es ist ein Fehler aufgetreten', author: '', rating: 1 }
+        ]);
+
+        // ODER: Fehler behandeln/transformieren und als Fehler weitergeben
+        // throwError() erstellt ein neues Fehler-Observable
+        // im .subscribe() wird das error-Callback gerufen, die Komponente erhält den Fehler
+
+        // return throwError(`Oh no, ${err.status} error occured`);
       })
     );
   }

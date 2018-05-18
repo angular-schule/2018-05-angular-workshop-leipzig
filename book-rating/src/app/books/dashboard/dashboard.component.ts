@@ -21,7 +21,8 @@ export class DashboardComponent implements OnInit {
 
     this.bs.getAll().subscribe(books => {
       this.books = books;
-    });
+    },
+    err => console.error(err));
   }
 
   updateSortList(book: Book) {
